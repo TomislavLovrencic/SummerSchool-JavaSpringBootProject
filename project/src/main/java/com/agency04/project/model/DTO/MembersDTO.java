@@ -6,7 +6,7 @@ public class MembersDTO {
 
     private List<String> members;
 
-    public MembersDTO(){
+    public MembersDTO() {
 
     }
 

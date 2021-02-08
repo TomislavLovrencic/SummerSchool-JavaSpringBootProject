@@ -20,47 +20,43 @@ public class SkillService {
     @Autowired
     private HeistMemberRepository heistMemberRepository;
 
-    public void addSkill(Skill skill){
+    public void addSkill(Skill skill) {
         skillRepository.save(skill);
     }
 
-    public void addSkill(SkillDTO skillDTO){
+    public void addSkill(SkillDTO skillDTO) {
         Skill skill = HelperController.skillDTOtoSkill(skillDTO);
         skillRepository.save(skill);
     }
 
-    public List<Skill> findAllSkills(Long id){
+    public List<Skill> findAllSkills(Long id) {
         return skillRepository.findAllSkills(id);
     }
 
-    public Skill getSkill(Long id){
+    public Skill getSkill(Long id) {
         return skillRepository.getOne(id);
     }
 
-    public void updateSkill(Skill newSkill){
+    public void updateSkill(Skill newSkill) {
         skillRepository.save(newSkill);
     }
 
-    public void removeSkill(List<Skill> skillsMember,String name,Long id){
+    public void removeSkill(List<Skill> skillsMember, String name, Long id) {
 
         Long idToRemove = 0l;
-        for(Skill elem : skillsMember){
-            if(elem.getName().equals(name)){
+        for (Skill elem : skillsMember) {
+            if (elem.getName().equals(name)) {
                 idToRemove = elem.getId();
             }
         }
         skillRepository.delete(skillRepository.getOne(idToRemove));
 
         HeistMember member = heistMemberRepository.getOne(id);
-        if(member.getMainSkill().equals(name)){
+        if (member.getMainSkill().equals(name)) {
             member.setMainSkill("none");
             heistMemberRepository.save(member);
         }
     }
-
-
-
-
 
 
 }

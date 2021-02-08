@@ -3,7 +3,7 @@ package com.agency04.project.model.DTO;
 public class HeistOutcomeDTO {
     private String outcome;
 
-    public HeistOutcomeDTO(){
+    public HeistOutcomeDTO() {
 
     }
 

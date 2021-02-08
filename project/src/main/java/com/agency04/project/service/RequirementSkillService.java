@@ -13,11 +13,11 @@ public class RequirementSkillService {
     @Autowired
     private RequirementSkillRepository requirementSkillRepository;
 
-    public void addRequirementSkill(RequirementSkill requirementSkill){
+    public void addRequirementSkill(RequirementSkill requirementSkill) {
         requirementSkillRepository.save(requirementSkill);
     }
 
-    public List<RequirementSkill> findAllSkills(Long id){
+    public List<RequirementSkill> findAllSkills(Long id) {
         return requirementSkillRepository.findAllSkills(id);
     }
 }

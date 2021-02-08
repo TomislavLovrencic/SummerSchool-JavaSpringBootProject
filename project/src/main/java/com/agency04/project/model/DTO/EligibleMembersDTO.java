@@ -1,8 +1,5 @@
 package com.agency04.project.model.DTO;
 
-import com.agency04.project.model.HeistMember;
-import com.agency04.project.model.RequirementSkill;
-
 import java.util.List;
 
 public class EligibleMembersDTO {
@@ -11,7 +8,7 @@ public class EligibleMembersDTO {
 
     private List<HeistMemberDTO> members;
 
-    public EligibleMembersDTO(){
+    public EligibleMembersDTO() {
     }
 
     public List<RequirementSkillDTO> getSkills() {

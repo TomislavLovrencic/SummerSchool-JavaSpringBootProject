@@ -1,12 +1,5 @@
 package com.agency04.project.model.DTO;
 
-import com.agency04.project.model.Heist;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
 public class RequirementSkillDTO {
 
     private String name;

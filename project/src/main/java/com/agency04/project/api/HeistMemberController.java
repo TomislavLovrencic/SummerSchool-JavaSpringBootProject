@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,19 +31,19 @@ public class HeistMemberController {
     private MailSendingService mailSendingService;
 
     @PostMapping("/member")
-    public ResponseEntity<Void> addHeistMember(@RequestBody HeistMemberDTO heistMemberDTO){
+    public ResponseEntity<Void> addHeistMember(@RequestBody HeistMemberDTO heistMemberDTO) {
         URI location = null;
 
         try {
-            Long id  = heistMemberService.addHeistMember(heistMemberDTO);
+            Long id = heistMemberService.addHeistMember(heistMemberDTO);
 
             location = ServletUriComponentsBuilder
-                    .fromCurrentRequest()
+                    .fromPath("/member")
                     .path("/{id}")
                     .buildAndExpand(id)
                     .toUri();
 
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -50,80 +51,78 @@ public class HeistMemberController {
         headers.setLocation(location);
 
 
-        return new ResponseEntity<Void>(headers,HttpStatus.CREATED);
+        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 
     }
 
     @PutMapping("/member/{id}/skills")
-    public ResponseEntity<Void> updateMemberSkills(@PathVariable Long id,@RequestBody HeistMemberDTO heistMemberDTO){
+    public ResponseEntity<Void> updateMemberSkills(@PathVariable Long id, @RequestBody HeistMemberDTO heistMemberDTO) {
 
-        if(heistMemberDTO.getMainSkill() == null && heistMemberDTO.getSkills() == null){
+        if (heistMemberDTO.getMainSkill() == null && heistMemberDTO.getSkills() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        if(!heistMemberService.existsHeistMember(id)){
+        if (!heistMemberService.existsHeistMember(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        try{
-            if(heistMemberDTO.getSkills() == null){
-                heistMemberService.updateHeistMemberMainSkill(heistMemberDTO,id);
+        try {
+            if (heistMemberDTO.getSkills() == null) {
+                heistMemberService.updateHeistMemberMainSkill(heistMemberDTO, id);
+            } else if (heistMemberDTO.getMainSkill() == null) {
+                heistMemberService.updateHeistMemberSkills(heistMemberDTO, id);
+            } else {
+                heistMemberService.updateHeistMemberMainSkill(heistMemberDTO, id);
+                heistMemberService.updateHeistMemberSkills(heistMemberDTO, id);
             }
-            else if(heistMemberDTO.getMainSkill() == null){
-                heistMemberService.updateHeistMemberSkills(heistMemberDTO,id);
-            }
-            else{
-                heistMemberService.updateHeistMemberMainSkill(heistMemberDTO,id);
-                heistMemberService.updateHeistMemberSkills(heistMemberDTO,id);
-            }
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
+                .fromPath("/member/{id}/skills")
                 .buildAndExpand(id)
                 .toUri();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(location);
 
-        return new ResponseEntity<Void>(headers,HttpStatus.NO_CONTENT);
+        return new ResponseEntity<Void>(headers, HttpStatus.NO_CONTENT);
 
     }
 
     @DeleteMapping("/member/{id}/skills/{name}")
-    public ResponseEntity<Void> removeHeistMemberSkill(@PathVariable Long id, @PathVariable String name){
+    public ResponseEntity<Void> removeHeistMemberSkill(@PathVariable Long id, @PathVariable String name) {
 
-        if(!heistMemberService.existsHeistMember(id)){
+        if (!heistMemberService.existsHeistMember(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         List<Skill> skillsMember = skillService.findAllSkills(id);
 
-        if(skillsMember.stream().noneMatch(p -> p.getName().equals(name))){
-            return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (skillsMember.stream().noneMatch(p -> p.getName().equals(name))) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        skillService.removeSkill(skillsMember,name,id);
+        skillService.removeSkill(skillsMember, name, id);
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/member/{id}")
-    public ResponseEntity<HeistMemberDTO> getHeistMember(@PathVariable Long id){
+    public ResponseEntity<HeistMemberDTO> getHeistMember(@PathVariable Long id) {
 
-        if(!heistMemberService.existsHeistMember(id)){
+        if (!heistMemberService.existsHeistMember(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         HeistMemberDTO heistMemberDTO = HelperController.heistMemberToDTO(heistMemberService.getHeistMember(id));
 
-        return new ResponseEntity<>(heistMemberDTO,HttpStatus.OK);
+        return new ResponseEntity<>(heistMemberDTO, HttpStatus.OK);
 
     }
 
 
     @GetMapping("/member/{id}/skills")
-    public ResponseEntity<SkillsDTO> getHeistMemberSkills(@PathVariable Long id){
-        if(!heistMemberService.existsHeistMember(id)){
+    public ResponseEntity<SkillsDTO> getHeistMemberSkills(@PathVariable Long id) {
+        if (!heistMemberService.existsHeistMember(id)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
@@ -133,7 +132,7 @@ public class HeistMemberController {
         skillsDTO.setSkills(heistMember.getSkills().stream().map(HelperController::skillToSkillDTO).collect(Collectors.toList()));
         skillsDTO.setMainSkill(heistMember.getMainSkill());
 
-        return new ResponseEntity<>(skillsDTO,HttpStatus.OK);
+        return new ResponseEntity<>(skillsDTO, HttpStatus.OK);
 
     }
 

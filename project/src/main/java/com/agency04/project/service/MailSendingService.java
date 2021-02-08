@@ -16,7 +16,7 @@ public class MailSendingService {
     private JavaMailSender javaMailSender;
 
 
-    public void  sendEmail(String email,String message) {
+    public void sendEmail(String email, String message) {
 
         SimpleMailMessage msg = new SimpleMailMessage();
         msg.setTo(email);
@@ -28,12 +28,12 @@ public class MailSendingService {
 
     }
 
-    public void notifyMembers(Heist heist,String message){
+    public void notifyMembers(Heist heist, String message) {
         List<HeistMember> members = heist.getMembers();
-        if(members == null) return;
-        for(HeistMember heistMember : members){
+        if (members == null) return;
+        for (HeistMember heistMember : members) {
             String email = heistMember.getEmail();
-            sendEmail(email,message);
+            sendEmail(email, message);
         }
     }
 }

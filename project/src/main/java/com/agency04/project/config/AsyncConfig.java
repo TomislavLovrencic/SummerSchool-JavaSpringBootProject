@@ -17,7 +17,7 @@ public class AsyncConfig {
     private static TaskScheduler scheduler;
 
     @Async
-    public static void executeTaskT(Runnable exampleRunnable,Date date) {
+    public static void executeTaskT(Runnable exampleRunnable, Date date) {
         ScheduledExecutorService localExecutor = Executors.newSingleThreadScheduledExecutor();
         scheduler = new ConcurrentTaskScheduler(localExecutor);
 

@@ -8,7 +8,7 @@ public class SkillsDTO {
 
     private String mainSkill;
 
-    public SkillsDTO(){
+    public SkillsDTO() {
     }
 
     public List<SkillDTO> getSkills() {

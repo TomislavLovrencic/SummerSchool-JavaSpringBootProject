@@ -18,7 +18,7 @@ public class RequirementSkill {
     @ManyToOne
     private Heist heist;
 
-    public RequirementSkill(){
+    public RequirementSkill() {
 
     }
 

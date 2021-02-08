@@ -1,14 +1,12 @@
 package com.agency04.project.model.DTO;
 
-import com.agency04.project.model.HeistMember;
-
 public class SkillDTO {
 
     private String name;
 
     private String level;
 
-    public SkillDTO(){
+    public SkillDTO() {
 
     }
 

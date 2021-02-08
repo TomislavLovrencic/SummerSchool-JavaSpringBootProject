@@ -1,12 +1,12 @@
 package com.agency04.project.model;
 
 
-
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "HeistMember", uniqueConstraints = { @UniqueConstraint(name = "member_email_unique",columnNames = "email") })
+@Table(name = "HeistMember", uniqueConstraints = {@UniqueConstraint(name = "member_email_unique", columnNames = "email"),
+        @UniqueConstraint(name = "member_name_unique", columnNames = "name")})
 public class HeistMember {
 
     @Id
@@ -20,9 +20,8 @@ public class HeistMember {
     private String email;
 
     @OneToMany
-    @JoinColumn(name = "heist_member_id",referencedColumnName = "id")
+    @JoinColumn(name = "heist_member_id", referencedColumnName = "id")
     private List<Skill> skills;
-
 
     @ManyToMany(mappedBy = "members")
     private List<Heist> heist;
@@ -32,11 +31,11 @@ public class HeistMember {
     @Enumerated(EnumType.STRING)
     private RobberStatus status;
 
-    public HeistMember(){
+    public HeistMember() {
 
     }
 
-    public HeistMember(String name, String sex, String email,List<Skill> skills,String mainSkill, RobberStatus status) {
+    public HeistMember(String name, String sex, String email, List<Skill> skills, String mainSkill, RobberStatus status) {
         this.name = name;
         this.sex = sex;
         this.email = email;
@@ -46,7 +45,7 @@ public class HeistMember {
     }
 
 
-    public void updateHeist(Heist heist){
+    public void updateHeist(Heist heist) {
         this.heist.add(heist);
     }
 
@@ -58,7 +57,7 @@ public class HeistMember {
         this.heist = heist;
     }
 
-    public Long getId(){
+    public Long getId() {
         return this.id;
     }
 

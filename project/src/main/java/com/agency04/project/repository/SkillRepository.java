@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository("skill")
-public interface SkillRepository extends JpaRepository<Skill,Long> {
+public interface SkillRepository extends JpaRepository<Skill, Long> {
 
-    @Query(value = "SELECT * FROM Skill WHERE heist_member_id = ?1",nativeQuery = true)
+    @Query(value = "SELECT * FROM Skill WHERE heist_member_id = ?1", nativeQuery = true)
     public List<Skill> findAllSkills(Long id);
 }

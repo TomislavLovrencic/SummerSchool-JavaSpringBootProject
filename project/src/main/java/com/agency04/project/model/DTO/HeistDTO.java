@@ -1,12 +1,5 @@
 package com.agency04.project.model.DTO;
 
-import com.agency04.project.model.RequirementSkill;
-import com.agency04.project.model.Skill;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import java.util.List;
 
 public class HeistDTO {
@@ -21,18 +14,18 @@ public class HeistDTO {
 
     private List<RequirementSkillDTO> skills;
 
-    private String heistStatus = "PLANING";
+    private String status = "PLANING";
 
-    public HeistDTO(){
+    public HeistDTO() {
 
     }
 
-    public String getHeistStatus() {
-        return heistStatus;
+    public String getStatus() {
+        return status;
     }
 
-    public void setHeistStatus(String heistStatus) {
-        this.heistStatus = heistStatus;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getName() {

@@ -20,11 +20,11 @@ public class Skill {
     @ManyToOne
     private HeistMember heistMember;
 
-    public Skill(){
+    public Skill() {
 
     }
 
-    public Skill(String name,String level) {
+    public Skill(String name, String level) {
         this.name = name;
         this.level = level;
     }

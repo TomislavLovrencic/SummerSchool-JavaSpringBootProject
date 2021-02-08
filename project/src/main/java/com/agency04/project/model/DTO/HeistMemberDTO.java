@@ -1,13 +1,5 @@
 package com.agency04.project.model.DTO;
 
-import com.agency04.project.model.Heist;
-import com.agency04.project.model.RobberStatus;
-import com.agency04.project.model.Skill;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import java.util.List;
 
 public class HeistMemberDTO {
@@ -24,7 +16,7 @@ public class HeistMemberDTO {
 
     private String status;
 
-    public HeistMemberDTO(){
+    public HeistMemberDTO() {
 
     }
 

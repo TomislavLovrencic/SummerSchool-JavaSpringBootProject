@@ -1,20 +1,17 @@
 package com.agency04.project.model;
 
-import com.agency04.project.model.DTO.HeistMemberDTO;
-
 import javax.persistence.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 import java.util.TimeZone;
 
 @Entity
 @Table(
         name = "Heist",
         uniqueConstraints = {
-                @UniqueConstraint(name = "heist_name_unique",columnNames = "name")
+                @UniqueConstraint(name = "heist_name_unique", columnNames = "name")
         }
 )
 public class Heist {
@@ -35,7 +32,7 @@ public class Heist {
     private HeistOutcome heistOutcome = HeistOutcome.NOT_FINISHED;
 
     @Enumerated(value = EnumType.STRING)
-    private HeistStatus heistStatus = HeistStatus.PLANING;
+    private HeistStatus status = HeistStatus.PLANING;
 
     @ManyToMany
     @JoinTable(
@@ -45,21 +42,22 @@ public class Heist {
     private List<HeistMember> members;
 
     @OneToMany
-    @JoinColumn(name = "heist_id",referencedColumnName = "id")
+    @JoinColumn(name = "heist_id", referencedColumnName = "id")
     private List<RequirementSkill> skills;
 
-    public Heist(){
+    public Heist() {
 
     }
 
-    public Heist(String name, String location, String startTime, String endTime, List<RequirementSkill> skills,HeistStatus status) {
+    public Heist(String name, String location, String startTime, String endTime, List<RequirementSkill> skills, HeistStatus status) {
         this.name = name;
         this.location = location;
         this.startTime = startTime;
         this.endTime = endTime;
         this.skills = skills;
-        this.heistStatus = status;
+        this.status = status;
     }
+
 
     public HeistOutcome getHeistOutcome() {
         return heistOutcome;
@@ -70,11 +68,11 @@ public class Heist {
     }
 
     public HeistStatus getHeistStatus() {
-        return heistStatus;
+        return status;
     }
 
     public void setHeistStatus(HeistStatus heistStatus) {
-        this.heistStatus = heistStatus;
+        this.status = heistStatus;
     }
 
     public List<HeistMember> getMembers() {
@@ -133,11 +131,11 @@ public class Heist {
         this.skills = skills;
     }
 
-    public String toIso(String time){
-         LocalDate date = LocalDate.parse(time);
-         TimeZone tz = TimeZone.getTimeZone("UTC");
-         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
-         df.setTimeZone(tz);
-         return  df.format(date);
-     }
+    public String toIso(String time) {
+        LocalDate date = LocalDate.parse(time);
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+        df.setTimeZone(tz);
+        return df.format(date);
+    }
 }

@@ -4,7 +4,7 @@ public class HeistStatusDTO {
 
     private String status;
 
-    public HeistStatusDTO(){
+    public HeistStatusDTO() {
 
     }
 
